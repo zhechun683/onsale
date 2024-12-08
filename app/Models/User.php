@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role', 
     ];
 
     /**
@@ -42,4 +43,31 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    // 检查是否为管理员
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+
+    // 检查是否为普通用户
+    public function isUser()
+    {
+        return $this->role === 'user';
+    }
+    public function shop()
+    {
+        return $this->hasOne(Shop::class);
+    }
+
+
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
